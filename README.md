@@ -11,10 +11,10 @@
 - 웹 프론트엔드에서 웹 백엔드까지 프로그래밍해 웹 애플리케이션을 개발하는 경험을 한다.
 
 ### 진행 미션
-|Project |Repository |Pull Request |
-|:------:|:---------:|:-----------:|
-|자동차 경주 게임|[java-racingcar](https://github.com/sakjung/java-racingcar/tree/step2)|[Pull Request](https://github.com/woowacourse/java-racingcar/pull/208)| 
-|로또|[java-lotto](https://github.com/sakjung/java-lotto/tree/step2)|[Pull Request](https://github.com/woowacourse/java-lotto/pull/296)|
-|블랙잭|[java-blackjack](https://github.com/sakjung/java-blackjack/tree/step2)|[Pull Request](https://github.com/woowacourse/java-blackjack/pull/171)|
-|체스|[java-chess](https://github.com/sakjung/java-chess/tree/step2)|[Pull Request](https://github.com/woowacourse/java-chess/pull/225)|
-|투두리스트|[js-todo-list-step1](https://github.com/sakjung/js-todo-list-step1/tree/sakjung)|[Pull Request](https://github.com/woowacourse/js-todo-list-step1/pull/35)|
+|Project |Repository |Pull Request |learning-log|
+|:------:|:---------:|:-----------:|:-----------|
+|자동차 경주 게임|[java-racingcar](https://github.com/sakjung/java-racingcar/tree/step2)|[Pull Request](https://github.com/woowacourse/java-racingcar/pull/208)| https://github.com/woowacourse/java-racingcar/pull/208#issuecomment-823038412|
+|로또|[java-lotto](https://github.com/sakjung/java-lotto/tree/step2)|[Pull Request](https://github.com/woowacourse/java-lotto/pull/296)| |
+|블랙잭|[java-blackjack](https://github.com/sakjung/java-blackjack/tree/step2)|[Pull Request](https://github.com/woowacourse/java-blackjack/pull/171)| |
+|체스|[java-chess](https://github.com/sakjung/java-chess/tree/step2)|[Pull Request](https://github.com/woowacourse/java-chess/pull/225)| |
+|투두리스트|[js-todo-list-step1](https://github.com/sakjung/js-todo-list-step1/tree/sakjung)|[Pull Request](https://github.com/woowacourse/js-todo-list-step1/pull/35)| |
