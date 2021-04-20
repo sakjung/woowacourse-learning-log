@@ -11,15 +11,10 @@
 - 웹 프론트엔드에서 웹 백엔드까지 프로그래밍해 웹 애플리케이션을 개발하는 경험을 한다.
 
 ### 진행 미션
-|Project |Repository |Pull Request |Pair |Reviewer |
-|:------:|:---------:|:-----------:|:---:|:-------:|
-|자동차 경주 게임/step1|[java-racingcar/step1](https://github.com/da-nyee/java-racingcar/tree/step1)|[Pull Request](https://github.com/woowacourse/java-racingcar/pull/184)|[웨지](https://github.com/ggyool)|[데이브](https://github.com/ep1stas1s)|
-|자동차 경주 게임/step2|[java-racingcar/step2](https://github.com/da-nyee/java-racingcar/tree/step2)|[Pull Request](https://github.com/woowacourse/java-racingcar/pull/237)| |[데이브](https://github.com/ep1stas1s)|
-|로또/step1|[java-lotto/step1](https://github.com/da-nyee/java-lotto/tree/step1)|[Pull Request](https://github.com/woowacourse/java-lotto/pull/248)|[영이](https://github.com/tributetothemoon)|[닉](https://github.com/choihz)|
-|로또/step2|[java-lotto/step2](https://github.com/da-nyee/java-lotto/tree/step2)|[Pull Request](https://github.com/woowacourse/java-lotto/pull/322)| |[닉](https://github.com/choihz)|
-|블랙잭/step1|[java-blackjack/step1](https://github.com/da-nyee/java-blackjack/tree/step1)|[Pull Request](https://github.com/woowacourse/java-blackjack/pull/139)|[중간곰](https://github.com/ggyool)|[코니](https://github.com/seok-2-o)|
-|블랙잭/step2|[java-blackjack/step2](https://github.com/da-nyee/java-blackjack/tree/step2)|[Pull Request](https://github.com/woowacourse/java-blackjack/pull/211)| |[코니](https://github.com/seok-2-o)|
-|Java 8 Lambda, Stream API|[java-study/da-nyee](https://github.com/da-nyee/java-study/tree/da-nyee)| | | |
-|체스/step1|[java-chess/step1](https://github.com/da-nyee/java-chess/tree/step1)|[Pull Request](https://github.com/woowacourse/java-chess/pull/193)|[소롱](https://github.com/Livenow14)|[제이](https://github.com/Hue9010)|
-|체스/step2|[java-chess/step2](https://github.com/da-nyee/java-chess/tree/step2)|[Pull Request](https://github.com/woowacourse/java-chess/pull/258)| |[제이](https://github.com/Hue9010)|
-|투두리스트/step1|[js-todo-list-step1/da-nyee](https://github.com/da-nyee/js-todo-list-step1/tree/da-nyee)|[Pull Request](https://github.com/woowacourse/js-todo-list-step1/pull/11)| | |
+|Project |Repository |Pull Request |
+|:------:|:---------:|:-----------:|
+|자동차 경주 게임|[java-racingcar](https://github.com/sakjung/java-racingcar/tree/step2)|[Pull Request](https://github.com/woowacourse/java-racingcar/pull/208)| 
+|로또|[java-lotto](https://github.com/sakjung/java-lotto/tree/step2)|[Pull Request](https://github.com/woowacourse/java-lotto/pull/296)|
+|블랙잭|[java-blackjack](https://github.com/sakjung/java-blackjack/tree/step2)|[Pull Request](https://github.com/woowacourse/java-blackjack/pull/171)|
+|체스|[java-chess](https://github.com/sakjung/java-chess/tree/step2)|[Pull Request](https://github.com/woowacourse/java-chess/pull/225)|
+|투두리스트|[js-todo-list-step1](https://github.com/sakjung/js-todo-list-step1/tree/sakjung)|[Pull Request](https://github.com/woowacourse/js-todo-list-step1/pull/35)|
