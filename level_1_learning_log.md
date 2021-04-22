@@ -35,13 +35,13 @@
 ## Enum
 ### 내용
 - 로또의 결과를 담당하는 클래스를 Enum으로 작성함
-- enum만이 가지고 있는 특성을 이해하고 활용해보는 연습
+- enum만이 가지고 있는 특성을 이해하고 활용해봄
 ### 링크
 - https://woowabros.github.io/tools/2017/07/10/java-enum-uses.html
 
 ## StringBuilder
 ### 내용
-- “+”로 String들을 이어주는 것 보다 StringBuilder를 사용하는 것이 더 빠름을 이해
+- “+”로 String들을 이어주는 것 보다 StringBuilder를 사용하는 것이 더 성능이 좋음을 이해
 - 로또의 요약본을 만들어 줄 때 StringBuilder를 활용해 봄
 ### 링크
 - https://novemberde.github.io/2017/04/15/String_0.html
@@ -72,9 +72,9 @@
 
 ## Lambda
 ### 내용
-- 구현해야할 추상 메서드를 하나만 정의해놓은 인터페이스 (자바에서 미리 여러개 정의해놓음)
+- 구현해야할 추상 메서드를 하나만 정의해놓은 인터페이스 (자바에서 이미 여러개 정의해놓음)
 - 간결하게 필요한 메서드를 구현 가능
-- parameter로 함수를 넣을 수 있음
+- parameter로 함수를 넣을 수 있게 해줌
 - 블랙잭의 결과 판별을 enum과 lambda를 활용하여 해결
 - 원래 player와 dealer들이 협력해서 결과를 판별하는 구조였음
 - outcome enum에 있는 각각의 결과 상수들이 결과 판단을 위한 로직을 스스로 갖고있게 만들어서 본인에게 해당되면 스스로를 반환하도록 구현
@@ -117,7 +117,7 @@
 - Web 에서의 MVC 구조 이해
 - HTTP Request, Response, Status Code, Method 등등
 - Java 에서의 DB 운용 (JDBC)
-- Handlebars 문법 (Sever Side Rendering)
+- Handlebars 문법
 ### 링크
 - https://sparkjava.com/documentation
 
