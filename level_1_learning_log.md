@@ -14,6 +14,7 @@
 ### 내용
 - 어떤 객체를 참조만 해서 로직을 수행하고자 할 때, 참조할 원본 객체보다 복사된 객체를 이용하는 것이 더 안전
 - 복사된 객체가 혹시나 변경 되더라도 원본(원래 객체)에는 영향이 없기 때문
+- 불변 객체
 
 ## 의존성 주입을 통한 테스트하기 용이한 코드
 ### 내용
@@ -28,6 +29,7 @@
 ### 내용
 - Domain부분에 한해서 TDD를 적용하여 개발하는 프로세스를 적용, 연습해 봄
 - 실패하는 테스트를 먼저 만들기 -> 통과하는 프로덕션 코드 만들기 -> 리팩토링 -> … 싸이클에 대한 적응
+
 ### 링크
 - http://cloudrain21.com/test-driven-development
 - https://www.guru99.com/test-driven-development.html
@@ -36,6 +38,7 @@
 ### 내용
 - 로또의 결과를 담당하는 클래스를 Enum으로 작성함
 - enum만이 가지고 있는 특성을 이해하고 활용해봄
+
 ### 링크
 - https://woowabros.github.io/tools/2017/07/10/java-enum-uses.html
 
@@ -43,12 +46,14 @@
 ### 내용
 - “+”로 String들을 이어주는 것 보다 StringBuilder를 사용하는 것이 더 성능이 좋음을 이해
 - 로또의 요약본을 만들어 줄 때 StringBuilder를 활용해 봄
+
 ### 링크
 - https://novemberde.github.io/2017/04/15/String_0.html
 
 ## Git
 ### 내용
 - 페어 프로그래밍 후 페어의 깃허브 레포지토리에 있는 소스코드를 가져와보는 것에 대해 공부
+
 ### 링크
 - https://github.com/next-step/nextstep-docs/blob/master/codereview/review-step3.md
 - https://readystory.tistory.com/151
@@ -72,9 +77,7 @@
 
 ## Lambda
 ### 내용
-- 구현해야할 추상 메서드를 하나만 정의해놓은 인터페이스 (자바에서 이미 여러개 정의해놓음)
 - 간결하게 필요한 메서드를 구현 가능
-- parameter로 함수를 넣을 수 있게 해줌
 - 블랙잭의 결과 판별을 enum과 lambda를 활용하여 해결
 - 원래 player와 dealer들이 협력해서 결과를 판별하는 구조였음
 - outcome enum에 있는 각각의 결과 상수들이 결과 판단을 위한 로직을 스스로 갖고있게 만들어서 본인에게 해당되면 스스로를 반환하도록 구현
@@ -108,6 +111,7 @@
 ### 내용
 - Optional을 활용하여 NPE의 위험을 줄이고 더 깔끔하게 null을 처리할 수 있음
 - null 처리 이외에 더 좋은 방법이 있는데도 불구하고 마구잡이로 쓰는 것은 위험함
+
 ### 링크
 - http://homoefficio.github.io/2019/10/03/Java-Optional-%EB%B0%94%EB%A5%B4%EA%B2%8C-%EC%93%B0%EA%B8%B0/
 
@@ -118,6 +122,7 @@
 - HTTP Request, Response, Status Code, Method 등등
 - Java 에서의 DB 운용 (JDBC)
 - Handlebars 문법
+
 ### 링크
 - https://sparkjava.com/documentation
 
