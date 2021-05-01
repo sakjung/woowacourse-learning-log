@@ -113,6 +113,16 @@ logging.level.tomcat=TRACE
 - logback.xml은 너무 일찍 로드되기 때문에 logback extension을 사용 할 수 없음
 - logback-spring.xml을 사용하거나 logging.config속성을 정의해야함
 
+## Logback 설정
+
+[예제 코드 참고](https://github.com/woowacourse/java-deploy/tree/feat/logging/src/main/resources)
+
+- json appender 에서 encoder를 위한 dependency 추가 해줘야함
+```
+e.g.
+implementation 'net.logstash.logback:logstash-logback-encoder:5.2'
+```
+
 REFERENCE
 
 https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/html/spring-boot-features.html#boot-features-logging
