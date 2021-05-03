@@ -123,8 +123,9 @@ e.g.
 implementation 'net.logstash.logback:logstash-logback-encoder:5.2'
 ```
 
-REFERENCE
+REFERENCES
 
-https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/html/spring-boot-features.html#boot-features-logging
+- https://github.com/woowacourse/java-deploy/blob/feat/logging/src/main/resources/logback.xml
+- https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/html/spring-boot-features.html#boot-features-logging
 
 
