@@ -1,20 +1,12 @@
-# In Memory vs 외부 DB
-## 내용
-
-**리뷰어 닉의 피드백**
-> 메모리에 핵심 데이터를 보관하는 서비스는 서버가 죽거나, 새로 배포하는 경우 손실될 위험이 있기 때문에, 영구적인 데이터는 DB에 저장하고, 조회해야 합니다 :)
-- 원래는 Service에서 ChessGame을 가지고 있어서 서버 메모리 내에서 게임 정보를 저장하고 있는 구조였음
-- 체스 말들이 움직일 때마다 바뀐 체스판 현황을 매 수를 둘 때마다 db (MySQL)에 저장하도록 구현
-
 # Controller & RestController
-## 내용
+
 - RestController는 Controller + ResponseBody
 - RestController는 Json을 통한 api통신을 할 때 주로 이용
 - ResponseEntity를 사용하면 효율적으로 원하는 response를 만들어서 반환할 수 있다
 - Dto를 반환하면 Spring에서 Dto의 getter를 사용해서 json으로 자동으로 변환해줌 (@ResponseBody)
 
 # Exception Handler & ControllerAdvice
-## 내용
+
 - 내부에서 발생하는 예외를 컨트롤러 단에서 잡아서 처리해주고 싶을 때 사용
 - Exception Handler는 하나의 컨트롤러 내에서 사용하는 국지적인 예외 처리
 - ControllerAdvice는 모든 컨트롤러에 대해 범용적으로 적용되는 예외 처리
@@ -39,55 +31,37 @@ https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/tes
 
 ### 상황에 따라 다르다!
 e.g.
+
 지하철 미션에서 구간에 대한 비즈니스 요구사항을 검증할 때:
-구간의 경우 요구되는 로직이 복잡하고 특정 라인의 구간들만 검사하면 되는 특징이 있음
-매번 db에 쿼리를 날리는 것 보다는 필요한 구간들을 db로 부터 가져와서 어플리케이션 내부에서 도메인 객체를 통해 처리해 주는 것이 더 유리
+- 구간의 경우 요구되는 로직이 복잡하고 특정 라인의 구간들만 검사하면 되는 특징이 있음
+- 매번 db에 쿼리를 날려서 해결하기 보다는 필요한 구간들을 db로 부터 다 가져와서 어플리케이션 내부에서 도메인 객체를 통해 처리해 주는 것이 더 유리
 
 노선이나 역에 대한 비즈니스 요구사항을 검증할 때:
-요구되는 로직이 비교적 단순함 (중복이름 검사, …)
-구간과 같이 모든 노선이나 역을 가져와서 도메인 객체에서 처리해주는 것이 오히려 비효율적임 (
-이 경우에는 db에 쿼리를 날려서 비즈니스 로직을 해결하는 편이 더 좋음
+- 요구되는 로직이 비교적 단순함 (중복이름 검사, …)
+- db에 존재하는 모든 노선이나 역을 가져와서 도메인 객체에서 처리해주는 것이 오히려 비효율적임
+- 이 경우에는 db에 쿼리를 날려서 비즈니스 로직을 해결하는 편이 더 좋음 (e.g. DAO에 doesNameExist 메서드 만들기)
 
-- 추가적인 성능개선을 위해서
-- 1. stored procedures (일련의 쿼리를 하나의 함수처럼 사용하기 위한 쿼리의 집합)
-- 2. index 생성 (indexing)을 통해 원하는 레코드를 더 빨리 가져올 수 있도록 한다
-- 3. 많은 양의 레코드에 대한 조작은 temp table 활용
+
+추가적인 성능개선을 위해서
+1. stored procedures (일련의 쿼리를 하나의 함수처럼 사용하기 위한 쿼리의 집합)
+2. index 생성 (indexing)을 통해 원하는 레코드를 더 빨리 가져올 수 있도록 한다
 
 https://stackoverflow.com/questions/10204790/code-performance-sql-server-query-vs-c-net-web-application
 
-# @Transactional
-
-- @Transactional은 선언된 class, method (interface에도 가능하나 권장되지 않음) 등의 **transactional semantics**를 나타내는 metadata
-- 트랜잭션 기능이 적용된 프록시 객체 생성
-- 선언된 부분의 메서드가 호출될 경우, PlatformTransactionManger를 사용하여 트랜잭션을 시작. 정상 여부에 따라 Commit 혹은 Rollback
-- 선언된 class 혹은 method의 data access 로직들은 하나의 트랜잭션으로 처리됨
-- 트랜잭션에 대한 다양한 설정가능
-
-e.g. 
-
-isolation: 다른 트랜잭션으로부터 격리된 정도. e.g. 이 트랜잭션에서 다른 트랜잭션의 commit 되지 않은 write를 확인할 수 있는가 
-
-readOnly: 트랜잭션을 읽기 전용으로 설정 (성능 최적화, 쓰기 작업 의도적으로 방지)
-
-https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#transaction-declarative-annotations
-
-https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html
-
 # Entity
 - entity는 보통 비즈니스 로직과 결부 되어서 얘기할 때 언급되는 개념
-- entity는 어떤 system이 모델링 하고자하는 (관심있는) 비즈니스 로직들에 대한 정보를 들고있음
+- entity는 어떤 서비스가 모델링 하고자하는 (관심있는) 비즈니스 로직들에 대한 정보를 들고있음
 
 (e.g. Customers, Employee, Student, Music Album …)
 - entity = lightweight persistence domain object
-- 통상적으로 db 테이블을 의미. 테이블의 각 row는 enttiy instance라고 할 수 있다.
-
 - entity의 persistence state는 persistence field, persistence properties 를 통해 나타내어진다.
-- persistence field는 바로 필드에 접근
-- persistence properties는 getter setter를 통해 접근
+- persistence field: 필드에 바로 접근
+- persistence properties: getter setter를 통해 접근
 
 ## value object (VO)와의 차이점
 - entity는 identity를 가짐 (primary key)
-- value object는 순수 값 비교를 통해서 비교
+- id 값을 통해 동등성 비교
+- value object는 순수 값 비교를 통해서 동등성 비교
 
 https://docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html
 
@@ -146,7 +120,6 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
 ```
 
 - 내부 구현: Token을 검증하고 validation 통과 시 LoginMember 객체를 바인딩해서 반환
-
 - Contoller에서는 LoginMember객체가 필요한 메서드에 파라미터로 @AuthenticationPrincipal를 선언
 - HandlerMethodArgumentResolver를 구현한 객체에서 설정해준 대로 LoginMember객체를 바로 바인딩해서 받을 수 있음
 
@@ -155,7 +128,7 @@ https://www.baeldung.com/spring-mvc-custom-data-binder
 https://medium.com/trabe/improve-your-argument-resolvers-using-filters-4089b28e53f3
 
 # Interceptor
-- 주로 cross-cutting concerns나 handler code의 반복 (e.g. logging, spring model에서 global하게 사용되는 파라미터를 변경 해야하는 경우)을 피하기 위해 사용됨
+- 주로 cross-cutting concerns나 handler code의 반복 (e.g. spring model에서 global하게 사용되는 파라미터를 변경 해야하는 경우)을 피하기 위해 사용됨
 - cross-cutting concerns (횡단 관심사): 다른 관심사에 영향을 주는 관심사. 다른 관심사와 의존성 (결합성)이 높은 관심사 (e.g. logging, authentication)
 - 실제 request를 본격적으로 handling하기 이전이나 이후에 원하는 처리를 interceptor를 활용해서 해줄 수 있음
 
@@ -165,15 +138,15 @@ https://medium.com/trabe/improve-your-argument-resolvers-using-filters-4089b28e5
 
 - HandlerInterceptor interface를 통해 구현 가능
 - Configuration에서 addInterceptor 메서드를 통해 등록해줘야함
-- interceptor 적용을 원하는 경로를 커스터마이징 해줄 수 있음
-  
+- interceptor 적용을 원하는 url 경로를 커스터마이징 해줄 수 있음
+
 
 - 구현하는 메서드에서 boolean type을 반환
 > true: request should be further processed (proceed) <br> 
 > false: should not (do not proceed)
 
 적용 예시
-- login된 유저만 서비스를 이용할 수 있도록 하기위해 인터셉터를 적용해봄
+- login된 유저만 서비스를 이용할 수 있도록 하기위해 인터셉터를 적용해봄 (authentication)
 - interceptor의 preHandle을 통해 controller의 handler로 넘어가기 전에 token을 valdiate
 - 유효한 토큰이면 true, 아니면 401 status code와 함께 false 반환
 
@@ -183,12 +156,12 @@ https://www.baeldung.com/spring-mvc-handlerinterceptor
 - 한 출처(origin)에서 다른 출처의 자원에 접근할 수 있는 권한을 부여하는 것
 - 프론트 서버에서 fetch api등을 통해 HTTP요청이 들어오면 백엔드 서버와 origin이 다르기 때문에 CORS에러가 발생한다
 - 서버단에서 별도의 설정을 통해서 프론트 서버 origin에서 서버 단에 요청이 가능하도록 해줘야한다
-- 본 요청 전에 preflight 요청을 보냄 (본 요청이 가능한지 찔러보기 개념)
+- 서버 데이터에 부수효과를 일으킬 수 있는 HTTP 요청 메서드 (GET을 제외한 메서드)는, 본 요청 전에 preflight 요청을 보냄 (본 요청이 가능한지 찔러보기 개념)
 - OPTIONS method로 요청이 감
 - preflight 요청에 대한 응답을 통해 실제 요청이 가능한지 여부를 따짐
 
 설정 방법
-1. WebMvcConfigurer 구현 객체에 addCorsMappings 오버라이드 해서 구현 
+1. WebMvcConfigurer 구현 객체에 addCorsMappings 메서드 오버라이드해서 구현 
    
 e.g.
 ```
@@ -241,6 +214,7 @@ https://developer.mozilla.org/ko/docs/Web/HTTP/CORS
 # java bean validation
 
 - JSR 380: Java API for bean validation
+- Hibernate Validator: the reference implementation of the validation API
 - 다양한 어노테이션을 통해 객체의 변수 값을 간편하게 validate 해줄 수 있음
 - user input을 DTO로 받을 때 값 유효성 검증에 사용하면 유용함
 - DTO에 어노테이션 설정 후 Controller에서 받을 때 @Valid 어노테이션과 함께 DTO를 받아야함
@@ -286,6 +260,7 @@ public class DataLoader implements CommandLineRunner {
 ```
 
 @ActiveProfiles
+
 JavaDoc
 > ActiveProfiles is a class-level annotation that is used to declare which active bean definition profiles should be used when loading an ApplicationContext **for test classes**.
 
