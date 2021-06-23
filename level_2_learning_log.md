@@ -10,9 +10,21 @@
 - 내부에서 발생하는 예외를 컨트롤러 단에서 잡아서 처리해주고 싶을 때 사용
 - Exception Handler는 하나의 컨트롤러 내에서 사용하는 국지적인 예외 처리
 - ControllerAdvice를 사용하면 모든 컨트롤러에 대해 범용적으로 적용되는 예외 처리 가능
-- 패키지 단위로 제한할 수도 있음
 
-e.g.
+
+- 특정 클래스에만 적용
+  
+```
+ControllerAdvice(assignableTypes = {a.class, b.class})
+```
+
+- 특정 annotation에만 적용
+
+```
+ControllerAdvice(annotations = Controller.class)
+```
+
+- 패키지 단위로 제한
   
 ```
 @RestControllerAdvice("wooteco.subway.auth.ui")
