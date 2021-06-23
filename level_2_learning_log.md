@@ -9,7 +9,7 @@
 
 - 내부에서 발생하는 예외를 컨트롤러 단에서 잡아서 처리해주고 싶을 때 사용
 - Exception Handler는 하나의 컨트롤러 내에서 사용하는 국지적인 예외 처리
-- ControllerAdvice는 모든 컨트롤러에 대해 범용적으로 적용되는 예외 처리
+- ControllerAdvice를 사용하면 모든 컨트롤러에 대해 범용적으로 적용되는 예외 처리 가능
 - 패키지 단위로 제한할 수도 있음
 
 e.g.
@@ -27,24 +27,13 @@ https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc#sample-applic
 
 https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/test/autoconfigure/jdbc/JdbcTest.html
 
-# 비즈니스 요구사항 DB Query로 처리 vs application 내부에서 처리
+# 비즈니스 요구사항: DB Query로 처리 vs application 내부에서 처리
 
-### 상황에 따라 다르다!
+- 상황에 따라 다를 수 있다
+- 지나치게 비효율적이지 않은 이상은 application에서 처리해준다
+
 e.g.
-
-지하철 미션에서 구간에 대한 비즈니스 요구사항을 검증할 때:
-- 구간의 경우 요구되는 로직이 복잡하고 특정 라인의 구간들만 검사하면 되는 특징이 있음
-- 매번 db에 쿼리를 날려서 해결하기 보다는 필요한 구간들을 db로 부터 다 가져와서 어플리케이션 내부에서 도메인 객체를 통해 처리해 주는 것이 더 유리
-
-노선이나 역에 대한 비즈니스 요구사항을 검증할 때:
-- 요구되는 로직이 비교적 단순함 (중복이름 검사, …)
-- db에 존재하는 모든 노선이나 역을 가져와서 도메인 객체에서 처리해주는 것이 오히려 비효율적임
-- 이 경우에는 db에 쿼리를 날려서 비즈니스 로직을 해결하는 편이 더 좋음 (e.g. DAO에 doesNameExist 메서드 만들기)
-
-
-추가적인 성능개선을 위해서
-1. stored procedures (일련의 쿼리를 하나의 함수처럼 사용하기 위한 쿼리의 집합)
-2. index 생성 (indexing)을 통해 원하는 레코드를 더 빨리 가져올 수 있도록 한다
+지하철 구간 관련 비즈니스 로직 vs 지하철 역 관련 비즈니스 로직
 
 https://stackoverflow.com/questions/10204790/code-performance-sql-server-query-vs-c-net-web-application
 
@@ -54,11 +43,8 @@ https://stackoverflow.com/questions/10204790/code-performance-sql-server-query-v
 
 (e.g. Customers, Employee, Student, Music Album …)
 - entity = lightweight persistence domain object
-- entity의 persistence state는 persistence field, persistence properties 를 통해 나타내어진다.
-- persistence field: 필드에 바로 접근
-- persistence properties: getter setter를 통해 접근
 
-## value object (VO)와의 차이점
+value object (VO)와의 차이점
 - entity는 identity를 가짐 (primary key)
 - id 값을 통해 동등성 비교
 - value object는 순수 값 비교를 통해서 동등성 비교
@@ -119,18 +105,13 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
 }
 ```
 
-- 내부 구현: Token을 검증하고 validation 통과 시 LoginMember 객체를 바인딩해서 반환
-- Contoller에서는 LoginMember객체가 필요한 메서드에 파라미터로 @AuthenticationPrincipal를 선언
-- HandlerMethodArgumentResolver를 구현한 객체에서 설정해준 대로 LoginMember객체를 바로 바인딩해서 받을 수 있음
-
 https://www.baeldung.com/spring-mvc-custom-data-binder
 
 https://medium.com/trabe/improve-your-argument-resolvers-using-filters-4089b28e53f3
 
 # Interceptor
-- 주로 cross-cutting concerns나 handler code의 반복 (e.g. spring model에서 global하게 사용되는 파라미터를 변경 해야하는 경우)을 피하기 위해 사용됨
-- cross-cutting concerns (횡단 관심사): 다른 관심사에 영향을 주는 관심사. 다른 관심사와 의존성 (결합성)이 높은 관심사 (e.g. logging, authentication)
-- 실제 request를 본격적으로 handling하기 이전이나 이후에 원하는 처리를 interceptor를 활용해서 해줄 수 있음
+- request를 본격적으로 handling하기 이전이나 이후에 원하는 처리를 interceptor를 활용해서 해줄 수 있음
+- 주로 횡단 관심사나 handler code의 반복을 피하기 위해 사용됨
 
 > preHandle() - called before the actual handler <br> 
 > postHandle() - called after the handler, but before view generation <br>
@@ -145,22 +126,18 @@ https://medium.com/trabe/improve-your-argument-resolvers-using-filters-4089b28e5
 > true: request should be further processed (proceed) <br> 
 > false: should not (do not proceed)
 
-적용 예시
-- login된 유저만 서비스를 이용할 수 있도록 하기위해 인터셉터를 적용해봄 (authentication)
-- interceptor의 preHandle을 통해 controller의 handler로 넘어가기 전에 token을 valdiate
-- 유효한 토큰이면 true, 아니면 401 status code와 함께 false 반환
-
 https://www.baeldung.com/spring-mvc-handlerinterceptor
 
 # CORS (cross origin resource sharing)
-- 한 출처(origin)에서 다른 출처의 자원에 접근할 수 있는 권한을 부여하는 것
-- 프론트 서버에서 fetch api등을 통해 HTTP요청이 들어오면 백엔드 서버와 origin이 다르기 때문에 CORS에러가 발생한다
-- 서버단에서 별도의 설정을 통해서 프론트 서버 origin에서 서버 단에 요청이 가능하도록 해줘야한다
-- 서버 데이터에 부수효과를 일으킬 수 있는 HTTP 요청 메서드 (GET을 제외한 메서드)는, 본 요청 전에 preflight 요청을 보냄 (본 요청이 가능한지 찔러보기 개념)
-- OPTIONS method로 요청이 감
-- preflight 요청에 대한 응답을 통해 실제 요청이 가능한지 여부를 따짐
+- 한 출처(origin)에서 실행중인 어플리케이션이 다른 출처의 자원에 접근할 수 있는 권한을 부여하는 것
+- 서버에서 별도의 설정을 통해서 다른 출처에서 서버로 요청이 가능하도록 허용 해줄 수 있다
 
-설정 방법
+CORS 요청 시나리오
+> 1. Simple requests <br>
+> 2. Pre-flight <br>
+> 3. credentialed requests
+
+backend Server 에서 CORS 설정하는 방법
 1. WebMvcConfigurer 구현 객체에 addCorsMappings 메서드 오버라이드해서 구현 
    
 e.g.
@@ -181,15 +158,15 @@ public class WebConfig implements WebMvcConfigurer {
 https://developer.mozilla.org/ko/docs/Web/HTTP/CORS
 
 # Test 종류
-종류와 구분에 집착하기 보다는 테스트의 목적이 중요하다!
+종류와 구분에 집착하기 보다는 테스트의 목적이 중요
 
 ## unit test, 단위 테스트
-- 독립된 테스트들로 이루어진다 (의존성이 없는 단독적인 테스트)
+- 의존성이 없는 단독적인 테스트
 - 다른 객체들에 의존하고 있는 객체에 대한 단위 테스트를 실행하려면 Mock 객체를 사용
 
 ## integration test, 통합 테스트
-- 구현한 로직들의 유기적인 관계를 확인하기 위한 테스트
-- 즉, 독립된 단위가 서로 연결될 때 올바르게 작동하는지 확인하는 테스트
+- 테스트 대상이 의존하고 있는 대상들과의 유기적인 관계를 확인하기 위한 테스트
+- 즉, 독립된 단위들이 서로 연결될 때 올바르게 작동하는지 확인하고자 하는 목적
 
 ## end to end test, Acceptance test, 인수 테스트
 - 클라이언트의 관점에서 요청과 응답이 제대로 이루어 지는가에 대한 테스트
@@ -227,14 +204,6 @@ public ResponseEntity createMember(@Valid @RequestBody MemberRequest request) {
 }
 ```
 
-예시
-* @NotNull validates that the annotated property value is not null.
-* @AssertTrue validates that the annotated property value is true.
-* @Size validates that the annotated property value has a size between the attributes min and max; can be applied to String, Collection, Map, and array properties.
-* @Min validates that the annotated property has a value no smaller than the value attribute.
-* @Max validates that the annotated property has a value no larger than the value attribute.
-* @Email validates that the annotated property is a valid email address.
-
 collection의 element에도 사용가능
 ```
 List<@NotBlank String> preferences;
@@ -246,11 +215,8 @@ https://www.baeldung.com/javax-validation
 # @Profile vs @ActiveProfiles
 
 @Profile
-- Bean 등록 시 특정 profile에만 Bean이 등록되게 하고싶을 때 사용
-- @Component class에 사용하면 특정 profile이 active할 때만 bean 등록 됨
-  e.g.
-  DataLoader class - 초기 데이터를 넣어 주는 class
-  local 환경에서만 적용 (bean 등록)하고싶을 때
+- 다수의 profile(application.properties, application.yml) 이 존재하는 상황에서 Bean 등록 시 특정 profile에만 Bean이 등록되게 하고싶을 때 사용
+- @Component 붙은 class에 사용하면 특정 profile이 active할 때만 bean 등록 됨
 ```
 @Component
 @Profile("local")
@@ -265,7 +231,6 @@ JavaDoc
 > ActiveProfiles is a class-level annotation that is used to declare which active bean definition profiles should be used when loading an ApplicationContext **for test classes**.
 
 - Test 상황에서 어떤 active profile을 사용할 것인지를 선언할 때 사용
-  e.g. application-test.yml 파일을 토대로한 applicationContext를 테스트 때 사용하고 싶을 때
 ```
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -307,49 +272,29 @@ public class SwaggerConfig {
 }
 ```
 - 마지막 validators 의존성이 있어야 SwaggerConfig에서 BeanValidatorPluginsConfiguration class를 @import할 수 있음
-- import 하게 되면 swagger ui 에서 models내부의 dto 설명에 validation 사항도 추가되서 정보가 들어감
-- dto validation 자체는 implementation 'org.springframework.boot:spring-boot-starter-validation’ 의존성 추가로 해결
+- import 하게 되면 swagger ui 에서 models 내부의 dto 설명에 validation 사항도 추가되서 정보가 들어감
 
 https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
 
 # load balancer vs reverse proxy
 
+load balancer는 여러개의 서버가 구동중일 때 필요
+
+하지만, reverse proxy는 서버가 하나더라도 유용. 꼭 여러대일 필요 없음
+
 ## load balancer
-A load balancer distributes incoming client requests among a group of servers, in each case returning the response from the selected server to the appropriate client.
+A load balancer distributes incoming client requests among a group of servers, in each case returning the response from the selected server to the appropriate client.
 
 - 다수의 서버에 부담을 분산시켜주는 것이 주 역할
-
 - 서버의 error response에 대해 더 유연하고 섬세하게 대처가능 (application server health check)
-  e.g. 여러개의 서버 중 한 서버가 down 돼었을 때, 요청들을 해당 서버를 제외한 다른 서버들로 redirect 시켜준다
-
-- session persistence
-  여러개의 서버에서 클라이언트 session에 대한 유지가 필요할 수 있음 (e.g. e-commerce)
-  이 때, 특정 클라이언트의 모든 요청들은 하나의 서버에서만 처리해주도록 할 수 있음
-
-load balancer는 여러개의 서버가 구동중일 때 필요
-reverse proxy는 꼭 여러대일 필요 없음. 서버가 하나더라도 유용
-
-reverse proxy = website’s public face
+- session persistence (세션 유지)
 
 ## reverse proxy
 A reverse proxy accepts a request from a client, forwards it to a server that can fulfill it, and returns the server’s response to the client.
 
 - 보안 강화
-  reverse proxy 덕분에 실제 backend server가 외부로 드러나 있지 않음. 그러므로, 악성 클라이언트가 직접적으로 접근하기 힘듦.
-  또한, 대부분의 reverse proxy server가 DDoS공격에 대한 방어를 지원함
-  e.g. 특정 ip의 클라이언트를 거부하는 기능 (blacklisting), 각 클라이언트당 할당된 connection갯수를 제한하는 기능
-
 - 확장성과 유연성
-  클라이언트들은 reverse proxy의 ip주소만을 바라보고 요청을 보내기 때문에 backend infrastructure 변화에 유연함
-  e.g. traffic 변동에 따라 유연하게 서버 증설/감축 가능
-
 - 성능 향상 (web accleration)
-  e.g.
-  Compression: response를 클라이언트에게 돌려주기 전에 압축 (e.g. gzip)해서 돌려줌. 필요한 대역폭양을 줄여줘서 네트워크상에서 성능향상에 기여
-
-SSL termination: Encryption/Decryption은 (computationally) 비쌈. backend 서버 대신 암호화 기능을 해줌으로써 backend 서버의 부담을 줄여주고 본 기능에 집중할 수 있게 해줌
-
-Caching: backend 서버의 response를 캐싱해둘 수 있음. 다음에 동일한 요청이 들어오면 바로 caching해둔 response를 클라이언트에게 전송
 
 https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/
 
@@ -358,9 +303,4 @@ https://www.nginx.com/resources/glossary/reverse-proxy-server/
 # TLS 설정
 
 - HTTP는 일반 텍스트로 통신하기 때문에 통신상의 암호화가 필요. 일반 텍스트는 패킷 스니핑을 당하면 내용이 그대로 드러나기 때문에 위험
-- letsencrypt를 활용해서 무료로 TLS 인증서를 사용가능
-- 인증서 발급 과정 중, 유효한 URL인지 확인을 위해 DNS TXT 레코드로 발행받은 특정 값을 추가 (DNS-01 challenge)
-> Let’s Encrypt가 ACME 클라이언트에 토큰을 제공 <br> 
-> -> 클라이언트는 해당 토큰과 계정 키에서 파생된 TXT 레코드를 생성하고 해당 레코드를_acme-challenge. <YOUR_DOMAIN>에 넣음 <br>
-> -> Let’s Encrypt가 해당 레코드에 대한 DNS 시스템을 쿼리 <br>
-> -> 일치하는 것이 있으면 인증서 발급을 진행
+- letsencrypt (DNS-01 challenge)
