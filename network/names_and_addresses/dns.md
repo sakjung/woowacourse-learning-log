@@ -54,7 +54,7 @@ Domain Name -> Registrar -> IP Address
 
 ### DNS caching server
 
-![DNS caching server](dns_caching_server.png)
+![DNS caching server](../images/dns_caching_server.png)
 
 - client로부터 요청이 들어오면 우선 local cache를 뒤져서 record를 찾아본다
 - record를 찾지못하면 적절한 nameservers로 쿼리를 포워딩 해준다
@@ -94,4 +94,49 @@ udacity.com.		60	IN	A	52.84.166.43
 ```
 
 - 위의 예시에서 60이 TTL
+
+## DNS and HTTP
+
+- Domain Name은 HTTP 통신에 있어서도 중요한 개념 (e.g. Cookie Security, SSL)
+### 하나의 웹서버는 여러개의 사이트에서 온 요청들을 다양한 domain name을 사용해서 처리해 줄 수 있다
+  
+(e.g. Apache Virtual Host, Nginx multiple server blocks)
+- HTTP requests에 host header가 있는 이유 (필수로 들어가야하는 파트임)
+- 이 헤더를 통해 웹 서버에게 내가 지금 어떤 host name, 어떤 domain name에게 요청을 하고 싶은지 명시할 수 있음
+
+### DNS and Cookie
+- web app이 cookie 설정을 하면, 해당 쿠키는 특정 domain name에 설정(할당)됨
+- 해당 도메인에 대한 추가적인 요청들은 쿠키가 들어가서 발송됨
+  
+### SSL encryption and Cookie
+
+- SSL encryption certificates는 특정 도메인에 발행됨
+- 브라우저와 서버의 중간에서 SSL encryption을 통해 private data를 읽는 것 (탈취 하는 것)을 방지함
+- 유저들의 브라우저가 데이터를 받아오는 사이트가 실제 그 해당 사이트가 맞는지 verify 하도록 해줌
+
+## DNS as a tree
+
+- DNS domains은 tree 구조를 띄고 있음 
+- google.com 혹은 udacity.com과 같은 도메인은 com과 같은 top level domain을 공유하고 있음
+- www.example.com은 example.com의 subdomain
+
+## www.example.com 과 example.com 의 차이
+
+- 예전에는 하나의 기계가 하나의 웹서버를 대표했음. 그래서 주로 www 사용 - www domains
+- 요새는 너무 많은 도메인이 거의 모든 웹 트래픽을 위해서 사용되므로, 많은 기관들이 www를 스킵하고 바로 도메인을 web server로 포인팅하는 추세 (e.g. github.com) - bare domain
+- 기술적 차이라기 보다는 단순한 스타일과 브랜딩 선호도의 차이 (아무거나 써도 상관 없음)
+
+## Search Domain
+
+- a setting in the resolver configuration that makes the resolver look up names inside a domain
+- 컴퓨터의 resolver에서 domain 내부의 host를 look up
+
+e.g.
+> example.edu라는 대학의 network에 접속
+> -> 나의 search domain에 example.edu 정보가 있을 수 있음
+> -> DNS name인 www를 look up 할 시, resolver는 www.example.edu를 먼저 찾을 것
+
+
+
+
 
