@@ -1,6 +1,6 @@
 # IPv4 & IPv6
 
-- IPv4: 오늘날의 대부분의 인터넷 트래픽이 사용하는 옛날 버젼 IP
+- IPv4: 오늘날의 대부분의 인터넷 트래픽이 사용하는 옛날 버젼 IP (`dotted quad`)
 
 ```
 # IPv4 예시
@@ -28,6 +28,18 @@
 
 - 65535보다 높은 port number에 connect할 수 없는 이유는 packet header의 port number space가 16-bits wide이기 때문
 
+## Ipv4 Address Space
 
+![ipv4_address_space](../images/ipv4_address_space.png)
 
+- Each square represents one possible value of the first octet of an address
+  
+For instance, the square on the top right, labeled `15`, represents all the IPv4 addresses that start with `15` as their first octet.
+
+- The light-green squares (`0`, `10`, and `127`) are blocks that are entirely reserved.
+- The dark-green squares are blocks that are partly reserved. For instance, not all of the `192` block is reserved, but some of it is.
+- The entire cyan row (starting at `224`) is set aside for IP multicast.
+- And the entire orange bottom row (starting at `240`) was originally set aside for "future use" but was effectively lost due to being blocked as invalid. No, really. We lost 1/16th of all IPv4 addresses due to mistaken planning.
+
+***In fact, just over `one-eighth` of all possible IPv4 addresses are set aside for something other than addressing public hosts***
 

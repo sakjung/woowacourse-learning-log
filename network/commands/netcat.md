@@ -20,6 +20,8 @@ If you would like to save the results of an nc command to a file, you can do thi
 printf "GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n" | nc www.example.com 80 > example.txt
 ```
 
+printf 'HEAD / HTTP/1.1\r\nHost: zzimkkong-service.o-r.kr\r\n\r\n' | nc zzimkkong-service.o-r.kr 8080
+
 ## printf
 - `echo`와 유사하게 string을 출력해준다
 - `echo`는 `printf` 와는 달리 `\n`과 같은 줄바꿈 특수문자를 해석해주지 않는다는 차이점이 있음
