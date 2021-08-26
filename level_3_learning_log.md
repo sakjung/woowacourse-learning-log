@@ -52,7 +52,7 @@ READ_UNCOMMITTED
 
 ![img.png](images/dirty_read.png)
 
-예시: 트랜잭션 1이 트랜잭션 2가 변경한 데이터를 읽음 -> 트랜잭션 2 roll back (abort) -> 트랜잭션 1이 읽은 데이터는 존재하지 않는 데이터
+예시: 트랜잭션 2가 트랜잭션 1이 변경한 데이터를 읽음 -> 트랜잭션 2 roll back (abort) -> 트랜잭션 1이 읽은 데이터는 존재하지 않는 데이터
 
 READ_COMMITTED
 커밋되지 않은 정보는 읽을 수 없음. select 문 실행 시 shared lock이 걸리고 쿼리가 끝나면 lock 해제.
