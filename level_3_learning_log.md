@@ -45,7 +45,7 @@ Durability (내구성): 트랜잭션이 성공적으로 수행되어 데이터�
 
 동시에 여러 트랜잭션이 진행될 때, 트랜잭션들 끼리 얼마나 서로 고립되어 있는지에 대한 레벨.
 
-READ_UNCOMMITTED
+### READ_UNCOMMITTED
 아직 커밋되지 않은 데이터를 다른 트랜잭션이 읽을 수 있는 설정. select 문 실행 시 어떤 lock도 걸지 않음.
 
 -> Dirty Read 발생: commit이 되지않고 rollback 되버린 존재하지 않는 데이터를 읽어오는 경우
@@ -54,7 +54,7 @@ READ_UNCOMMITTED
 
 예시: 트랜잭션 2가 트랜잭션 1이 변경한 데이터를 읽음 -> 트랜잭션 2 roll back (abort) -> 트랜잭션 1이 읽은 데이터는 존재하지 않는 데이터
 
-READ_COMMITTED
+### READ_COMMITTED
 커밋되지 않은 정보는 읽을 수 없음. select 문 실행 시 shared lock이 걸리고 쿼리가 끝나면 lock 해제.
 
 -> Non-Repeatable Read 발생: 하나의 트랜잭션 내에서 똑같은 조회쿼리를 수행했을 때 항상 같은 값이 나와야하는데 그렇지 못한 경우
@@ -63,7 +63,7 @@ READ_COMMITTED
 
 예시: 트랜잭션 1이 데이터를 읽음 -> 트랜잭션 2가 트랜잭션 1이 읽은 데이터를 변경하고 커밋 -> 트랜잭션 1이 다시 같은 데이터를 읽음 -> 데이터 값이 처음 읽은 값과 다름
 
-REPEATABLE_READ
+### REPEATABLE_READ
 반복해서 조회해도 데이터가 일관되게 조회됨. select 문 실행 시 shared lock이 걸리고 해당 transaction이 끝나면 lock이 풀림.
 
 -> Phantom Read 발생: 다른 트랜잭션에서 수행한 변경 작업에 의해 레코드가 보였다가 안 보였다가 하는 현상.
@@ -72,7 +72,7 @@ REPEATABLE_READ
 
 예시: 트랜잭션 1이 한 범위의 데이터를 읽음 (e.g. select query with where clause) -> 트랜잭션 2가 트랜잭션 1이 읽은 범위에 해당하는 새로운 데이터를 추가 -> 트랜잭션 1이 동일한 범위의 데이터를 다시 읽었을 때, 처음 읽은 것과 다름
 
-SERIALIZABLE
+### SERIALIZABLE
 Phantom Read 까지 방지하기 위한 가장 엄격한 격리 수준. select 문 실행시 ranged lock 사용. 동시 처리 성능이 가장 낮아 잘 사용되지 않는다.
 
 대부분의 DB - READ COMMITTED (default)
